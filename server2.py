@@ -51,19 +51,19 @@ def upload(thread_name, graph_size, times_to_upload=1):
         filename = G.get_name()
 
         # put_graph(sftp, filename)
-        # def wrapped():
-        #     return server2_upload(G)
-        #
-        # import timeit
-        # total_time = timeit.timeit(stmt=wrapped, number=1)
-        # date_format = '%H:%M:%S %Z'
-        # date = datetime.now()
-        # my_timezone = timezone('US/Pacific')
-        # date = my_timezone.localize(date)
-        # date = date.astimezone(my_timezone)
-        # print i, thread_name, filename
-        # print 'graph_size:', graph_size, '|| time_elapsed:', total_time, 'seconds || clock:', date.strftime(date_format)
-        # times.append(total_time)
+        def wrapped():
+            return server2_upload(G)
+
+        import timeit
+        total_time = timeit.timeit(stmt=wrapped, number=1)
+        date_format = '%H:%M:%S %Z'
+        date = datetime.now()
+        my_timezone = timezone('US/Pacific')
+        date = my_timezone.localize(date)
+        date = date.astimezone(my_timezone)
+        print i, thread_name, filename
+        print 'graph_size:', graph_size, '|| time_elapsed:', total_time, 'seconds || clock:', date.strftime(date_format)
+        times.append(total_time)
         # graph_size = ((graph_size * 2) / 10) * 10
 
 
