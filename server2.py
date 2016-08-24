@@ -1,4 +1,3 @@
-import paramiko
 from ndex.networkn import NdexGraph
 import networkx as nx
 from datetime import datetime
@@ -38,7 +37,7 @@ def server2_upload_from_file(cxfilename):
 
 def upload(thread_name, graph_size, times_to_upload=1):
     print 'start', thread_name
-    # sftp = connect('54.187.83.22', 22, 'ec2-user', 'aws_test_RH_7.pem')
+    sftp = connect('54.149.222.150', 22, 'ec2-user', 'aws_test_RH_7.pem')
 
 
 
@@ -68,12 +67,12 @@ def upload(thread_name, graph_size, times_to_upload=1):
 
 
 if __name__ == '__main__':
-    thread.start_new_thread(upload, ('thread-1', 100, 1) )
-    # thread.start_new_thread(upload, ('thread-2', 3200, 1) )
-    # thread.start_new_thread(upload, ('thread-3', 3200, 1))
-    # thread.start_new_thread(upload, ('thread-4', 3200, 1))
-    # thread.start_new_thread(upload, ('thread-5', 3200, 1))
-    # thread.start_new_thread(upload, ('thread-6', 3200, 1))
+    thread.start_new_thread(upload, ('thread-1', 1600, 1) )
+    thread.start_new_thread(upload, ('thread-2', 1600, 1) )
+    thread.start_new_thread(upload, ('thread-3', 1600, 1))
+    thread.start_new_thread(upload, ('thread-4', 1600, 1))
+    thread.start_new_thread(upload, ('thread-5', 1600, 1))
+    thread.start_new_thread(upload, ('thread-6', 1600, 1))
     # thread.start_new_thread(upload, ('thread-7', 3200, 1))
     # thread.start_new_thread(upload, ('thread-8', 3200, 1))
     # upload('main-thread', 3200, 1)

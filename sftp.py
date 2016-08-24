@@ -34,7 +34,7 @@ def put_graph(sftp, filename):
 
 def upload(thread_name, graph_size, times_to_upload=1):
     print 'start', thread_name
-    sftp = connect('54.187.83.22', 22, 'ec2-user', 'aws_test_RH_7.pem')
+    sftp = connect('54.244.205.16', 22, 'ec2-user', 'aws_test_RH_7.pem')
 
     # graph_size = 3200
     graph_sizes = []
@@ -61,12 +61,12 @@ def upload(thread_name, graph_size, times_to_upload=1):
 
 
 if __name__ == '__main__':
-    thread.start_new_thread(upload, ('thread-1', 6400, 1) )
-    # thread.start_new_thread(upload, ('thread-2', 3200, 1) )
-    # thread.start_new_thread(upload, ('thread-3', 3200, 1))
-    # thread.start_new_thread(upload, ('thread-4', 3200, 1))
-    # thread.start_new_thread(upload, ('thread-5', 3200, 1))
-    # thread.start_new_thread(upload, ('thread-6', 3200, 1))
+    thread.start_new_thread(upload, ('thread-1', 1600, 1) )
+    thread.start_new_thread(upload, ('thread-2', 1600, 1) )
+    thread.start_new_thread(upload, ('thread-3', 1600, 1))
+    thread.start_new_thread(upload, ('thread-4', 1600, 1))
+    thread.start_new_thread(upload, ('thread-5', 1600, 1))
+    thread.start_new_thread(upload, ('thread-6', 1600, 1))
     # thread.start_new_thread(upload, ('thread-7', 3200, 1))
     # thread.start_new_thread(upload, ('thread-8', 3200, 1))
     # upload('main-thread', 3200, 1)
