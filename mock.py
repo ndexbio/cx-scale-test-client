@@ -144,12 +144,12 @@ def download(thread_name, graph_size, times_to_upload=1, network_id=None):
         # graph_size = ((graph_size * 2) / 10) * 10
 
 if __name__ == '__main__':
-    thread.start_new_thread(download, ('thread-1', 1600, 1, '207d5967-6a5c-11e6-b0fb-06832d634f41'))
-    thread.start_new_thread(download, ('thread-2', 1600, 1, '20ba8978-6a5c-11e6-b0fb-06832d634f41'))
-    thread.start_new_thread(download, ('thread-3', 1600, 1, '21f74f39-6a5c-11e6-b0fb-06832d634f41'))
-    thread.start_new_thread(download, ('thread-4', 1600, 1, '23271caa-6a5c-11e6-b0fb-06832d634f41'))
-    thread.start_new_thread(download, ('thread-5', 1600, 1, '2403c10b-6a5c-11e6-b0fb-06832d634f41'))
-    thread.start_new_thread(download, ('thread-6', 1600, 1, '242838fc-6a5c-11e6-b0fb-06832d634f41'))
+    thread.start_new_thread(download, ('thread-1', 1600, 1, '37b31d90-3a3a-4802-b1ed-000fe76d3c0a'))
+    thread.start_new_thread(download, ('thread-2', 1600, 1, '37b31d90-3a3a-4802-b1ed-000fe76d3c0b'))
+    thread.start_new_thread(download, ('thread-3', 1600, 1, '37b31d90-3a3a-4802-b1ed-000fe76d3c0c'))
+    thread.start_new_thread(download, ('thread-4', 1600, 1, '37b31d90-3a3a-4802-b1ed-000fe76d3c0d'))
+    thread.start_new_thread(download, ('thread-5', 1600, 1, '37b31d90-3a3a-4802-b1ed-000fe76d3c0e'))
+    thread.start_new_thread(download, ('thread-6', 1600, 1, '37b31d90-3a3a-4802-b1ed-000fe76d3c0f'))
     # thread.start_new_thread(upload, ('thread-7', 3200, 1))
     # thread.start_new_thread(upload, ('thread-8', 3200, 1))
     # upload('main-thread', 3200, 1)
