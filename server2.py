@@ -29,6 +29,11 @@ def server2_upload_from_file(cxfilename):
     ndex = nc.Ndex('http://dev.ndexbio.org', 'scratch', 'scratch')
     ndex.save_cx_stream_as_new_network(cx_stream)
 
+def server2_download(network_id):
+    ndex = nc.Ndex('http://dev.ndexbio.org', 'scratch', 'scratch')
+    result = ndex.get_network_as_cx_stream(network_id)
+    return result.json()
+
 
 # def wrapper_putter(sftp, filename):
 #     def wrapped():
@@ -36,10 +41,7 @@ def server2_upload_from_file(cxfilename):
 #      return wrapped
 
 def upload(thread_name, graph_size, times_to_upload=1):
-    print 'start', thread_name
-    sftp = connect('54.149.222.150', 22, 'ec2-user', 'aws_test_RH_7.pem')
-
-
+    print 'start upload', thread_name
 
     # graph_size = 3200
     graph_sizes = []
@@ -65,14 +67,40 @@ def upload(thread_name, graph_size, times_to_upload=1):
         times.append(total_time)
         # graph_size = ((graph_size * 2) / 10) * 10
 
+def download(thread_name, graph_size, times_to_upload=1, network_id=None):
+    print 'start download', thread_name
+
+    # graph_size = 3200
+    graph_sizes = []
+    times = []
+    for i in range(times_to_upload):
+        graph_sizes.append(graph_size)
+
+
+        # put_graph(sftp, filename)
+        def wrapped():
+            return server2_download(network_id)
+
+        import timeit
+        total_time = timeit.timeit(stmt=wrapped, number=1)
+        date_format = '%H:%M:%S %Z'
+        date = datetime.now()
+        my_timezone = timezone('US/Pacific')
+        date = my_timezone.localize(date)
+        date = date.astimezone(my_timezone)
+        print i, thread_name, network_id
+        print 'graph_size:', graph_size, '|| time_elapsed:', total_time, 'seconds || clock:', date.strftime(date_format)
+        times.append(total_time)
+        # graph_size = ((graph_size * 2) / 10) * 10
+
 
 if __name__ == '__main__':
-    thread.start_new_thread(upload, ('thread-1', 1600, 1) )
-    thread.start_new_thread(upload, ('thread-2', 1600, 1) )
-    thread.start_new_thread(upload, ('thread-3', 1600, 1))
-    thread.start_new_thread(upload, ('thread-4', 1600, 1))
-    thread.start_new_thread(upload, ('thread-5', 1600, 1))
-    thread.start_new_thread(upload, ('thread-6', 1600, 1))
+    thread.start_new_thread(download, ('thread-1', 1600, 1, '207d5967-6a5c-11e6-b0fb-06832d634f41') )
+    thread.start_new_thread(download, ('thread-2', 1600, 1, '20ba8978-6a5c-11e6-b0fb-06832d634f41') )
+    thread.start_new_thread(download, ('thread-3', 1600, 1, '21f74f39-6a5c-11e6-b0fb-06832d634f41') )
+    thread.start_new_thread(download, ('thread-4', 1600, 1, '23271caa-6a5c-11e6-b0fb-06832d634f41') )
+    thread.start_new_thread(download, ('thread-5', 1600, 1, '2403c10b-6a5c-11e6-b0fb-06832d634f41') )
+    thread.start_new_thread(download, ('thread-6', 1600, 1, '242838fc-6a5c-11e6-b0fb-06832d634f41') )
     # thread.start_new_thread(upload, ('thread-7', 3200, 1))
     # thread.start_new_thread(upload, ('thread-8', 3200, 1))
     # upload('main-thread', 3200, 1)
