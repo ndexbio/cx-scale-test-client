@@ -27,6 +27,9 @@ def generate_graph(graph_size, prefix=''):
 def put_graph(sftp, filename):
     sftp.put(filename, '/home/ec2-user/' + filename)
 
+def get_graph(sftp, filename):
+    sftp.get('/home/ec2-user/' + filename, filename)
+
 # def wrapper_putter(sftp, filename):
 #     def wrapped():
 #         return put_graph(sftp, filename)
@@ -59,14 +62,39 @@ def upload(thread_name, graph_size, times_to_upload=1):
         times.append(total_time)
         # graph_size = ((graph_size * 2) / 10) * 10
 
+def download(thread_name, graph_size, times_to_upload=1, filename=None):
+    print 'start download', thread_name
+    sftp = connect('54.244.205.16', 22, 'ec2-user', 'aws_test_RH_7.pem')
+
+    # graph_size = 3200
+    graph_sizes = []
+    times = []
+    for i in range(times_to_upload):
+
+        # put_graph(sftp, filename)
+        def wrapped():
+            return get_graph(sftp, filename)
+
+        import timeit
+        total_time = timeit.timeit(stmt=wrapped, number=1)
+        date_format = '%H:%M:%S %Z'
+        date = datetime.now()
+        my_timezone = timezone('US/Pacific')
+        date = my_timezone.localize(date)
+        date = date.astimezone(my_timezone)
+        print i, thread_name, filename
+        print 'graph_size:', graph_size, '|| time_elapsed:', total_time, 'seconds || clock:', date.strftime(date_format)
+        times.append(total_time)
+        # graph_size = ((graph_size * 2) / 10) * 10
+
 
 if __name__ == '__main__':
-    thread.start_new_thread(upload, ('thread-1', 1600, 1) )
-    thread.start_new_thread(upload, ('thread-2', 1600, 1) )
-    thread.start_new_thread(upload, ('thread-3', 1600, 1))
-    thread.start_new_thread(upload, ('thread-4', 1600, 1))
-    thread.start_new_thread(upload, ('thread-5', 1600, 1))
-    thread.start_new_thread(upload, ('thread-6', 1600, 1))
+    thread.start_new_thread(download, ('thread-1', 1600, 1, 'thread-1-1-1600.cx') )
+    thread.start_new_thread(download, ('thread-2', 1600, 1, 'thread-2-1-1600.cx') )
+    thread.start_new_thread(download, ('thread-3', 1600, 1, 'thread-3-1-1600.cx'))
+    thread.start_new_thread(download, ('thread-4', 1600, 1, 'thread-4-1-1600.cx'))
+    thread.start_new_thread(download, ('thread-5', 1600, 1, 'thread-5-1-1600.cx'))
+    thread.start_new_thread(download, ('thread-6', 1600, 1, 'thread-6-1-1600.cx'))
     # thread.start_new_thread(upload, ('thread-7', 3200, 1))
     # thread.start_new_thread(upload, ('thread-8', 3200, 1))
     # upload('main-thread', 3200, 1)
