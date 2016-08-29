@@ -2,12 +2,12 @@ from ndex.networkn import NdexGraph
 import networkx as nx
 from datetime import datetime
 from pytz import timezone
-import pytz
+
 import thread
 import time
 import ndex.client as nc
-from requests_toolbelt import MultipartEncoder
-import requests
+import os
+
 
 def generate_graph(graph_size, prefix=''):
     prefix = str(prefix)
@@ -70,7 +70,6 @@ def upload(thread_name, graph_size, times_to_upload=1):
 def download(thread_name, graph_size, times_to_upload=1, network_id=None):
     print 'start download', thread_name
 
-    # graph_size = 3200
     graph_sizes = []
     times = []
     for i in range(times_to_upload):
@@ -93,28 +92,53 @@ def download(thread_name, graph_size, times_to_upload=1, network_id=None):
         times.append(total_time)
         # graph_size = ((graph_size * 2) / 10) * 10
 
+def upload_cx_dir(cx_dir_name='cx'):
+    cx_files = [f for f in os.listdir(cx_dir_name) if f.endswith('.cx')]
+    count = 1
+    for cx_file in cx_files:
+        G = NdexGraph(filename=cx_file)
+        uuid = G.upload_to('http://dev.ndexbio.org', 'scratch', 'scratch')
+        print 'Uploaded', count, 'cx file'
+        count += 1
+        del G
 
-if __name__ == '__main__':
-    thread.start_new_thread(download, ('thread-1', 1600, 1, '207d5967-6a5c-11e6-b0fb-06832d634f41') )
-    thread.start_new_thread(download, ('thread-2', 1600, 1, '20ba8978-6a5c-11e6-b0fb-06832d634f41') )
-    thread.start_new_thread(download, ('thread-3', 1600, 1, '21f74f39-6a5c-11e6-b0fb-06832d634f41') )
-    thread.start_new_thread(download, ('thread-4', 1600, 1, '23271caa-6a5c-11e6-b0fb-06832d634f41') )
-    thread.start_new_thread(download, ('thread-5', 1600, 1, '2403c10b-6a5c-11e6-b0fb-06832d634f41') )
-    thread.start_new_thread(download, ('thread-6', 1600, 1, '242838fc-6a5c-11e6-b0fb-06832d634f41') )
-    # thread.start_new_thread(upload, ('thread-7', 3200, 1))
-    # thread.start_new_thread(upload, ('thread-8', 3200, 1))
-    # upload('main-thread', 3200, 1)
+def timed_upload_cx_dir(thread_name, cx_dir_name='cx'):
+    print 'start dir upload', thread_name
+
+    def wrapped():
+        return upload_cx_dir(cx_dir_name)
+
+    import timeit
+    total_time = timeit.timeit(stmt=wrapped, number=1)
+    date_format = '%H:%M:%S %Z'
+    date = datetime.now()
+    my_timezone = timezone('US/Pacific')
+    date = my_timezone.localize(date)
+    date = date.astimezone(my_timezone)
+    print thread_name
+    print 'time_elapsed:', total_time, 'seconds || clock:', date.strftime(date_format)
+
+
+
+def concurrent_download():
+    thread.start_new_thread(download, ('thread-1', 1600, 1, '207d5967-6a5c-11e6-b0fb-06832d634f41'))
+    thread.start_new_thread(download, ('thread-2', 1600, 1, '20ba8978-6a5c-11e6-b0fb-06832d634f41'))
+    thread.start_new_thread(download, ('thread-3', 1600, 1, '21f74f39-6a5c-11e6-b0fb-06832d634f41'))
+    thread.start_new_thread(download, ('thread-4', 1600, 1, '23271caa-6a5c-11e6-b0fb-06832d634f41'))
+    thread.start_new_thread(download, ('thread-5', 1600, 1, '2403c10b-6a5c-11e6-b0fb-06832d634f41'))
+    thread.start_new_thread(download, ('thread-6', 1600, 1, '242838fc-6a5c-11e6-b0fb-06832d634f41'))
+
     print 'Done launching threads.'
 
     while 1:
         time.sleep(1000)
         pass
-    # graph_size = ((graph_size * 2) / 10) * 10
 
-    # sftp = connect('54.187.83.22', 22, 'ec2-user', 'aws_test_RH_7.pem')
 
-    # import pandas as pd
-    # df = pd.DataFrame (data=[graph_sizes,times])
-    # print df
-    # for file in sftp.listdir():
-    #     print file
+
+if __name__ == '__main__':
+    # concurrent_download()
+    timed_upload_cx_dir('main-thread')
+
+
+
