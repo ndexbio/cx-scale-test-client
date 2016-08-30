@@ -98,7 +98,7 @@ def upload_cx_dir(cx_dir_name='cx'):
     for cx_file in cx_files:
         G = NdexGraph(filename=cx_file)
         uuid = G.upload_to('http://dev.ndexbio.org', 'scratch', 'scratch')
-        print 'Uploaded', count, 'cx file'
+        # print 'Uploaded', count, 'cx file'
         count += 1
         del G
 
@@ -125,6 +125,12 @@ def concurrent_timed_upload_cx_dir():
     thread.start_new_thread(timed_upload_cx_dir, ('thread-4', 'cx4'))
     thread.start_new_thread(timed_upload_cx_dir, ('thread-5', 'cx5'))
     thread.start_new_thread(timed_upload_cx_dir, ('thread-6', 'cx6'))
+
+    print 'Done launching threads.'
+
+    while 1:
+        time.sleep(1000)
+        pass
 
 def concurrent_download():
     thread.start_new_thread(download, ('thread-1', 1600, 1, '207d5967-6a5c-11e6-b0fb-06832d634f41'))
