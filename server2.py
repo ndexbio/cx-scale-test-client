@@ -118,7 +118,13 @@ def timed_upload_cx_dir(thread_name, cx_dir_name='cx'):
     print thread_name
     print 'time_elapsed:', total_time, 'seconds || clock:', date.strftime(date_format)
 
-
+def concurrent_timed_upload_cx_dir():
+    thread.start_new_thread(timed_upload_cx_dir, ('thread-1', 'cx1'))
+    thread.start_new_thread(timed_upload_cx_dir, ('thread-2', 'cx2'))
+    thread.start_new_thread(timed_upload_cx_dir, ('thread-3', 'cx3'))
+    thread.start_new_thread(timed_upload_cx_dir, ('thread-4', 'cx4'))
+    thread.start_new_thread(timed_upload_cx_dir, ('thread-5', 'cx5'))
+    thread.start_new_thread(timed_upload_cx_dir, ('thread-6', 'cx6'))
 
 def concurrent_download():
     thread.start_new_thread(download, ('thread-1', 1600, 1, '207d5967-6a5c-11e6-b0fb-06832d634f41'))
@@ -138,7 +144,6 @@ def concurrent_download():
 
 if __name__ == '__main__':
     # concurrent_download()
-    timed_upload_cx_dir('main-thread')
-
+    concurrent_timed_upload_cx_dir()
 
 
