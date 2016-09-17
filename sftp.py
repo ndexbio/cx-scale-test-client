@@ -4,8 +4,11 @@ import networkx as nx
 from datetime import datetime
 from pytz import timezone
 import pytz
-import thread
+import threading
 import time
+from time import ctime
+import argparse
+import os
 
 
 # Open a transport
@@ -17,98 +20,128 @@ def connect(host, port, username, keyfile):
     sftp = paramiko.SFTPClient.from_transport(transport)
     return sftp
 
-def generate_graph(graph_size, prefix=''):
-    prefix = str(prefix)
-    G = NdexGraph(networkx_G=nx.complete_graph(graph_size))
-    filename = prefix + '-' + str(graph_size) + '.cx'
-    G.write_to(filename)
-    return filename
-
 def put_graph(sftp, filename):
     sftp.put(filename, '/home/ec2-user/' + filename)
 
 def get_graph(sftp, filename):
     sftp.get('/home/ec2-user/' + filename, filename)
 
-# def wrapper_putter(sftp, filename):
-#     def wrapped():
-#         return put_graph(sftp, filename)
-#      return wrapped
+def download_files(thread_name, network_files_filename, outdir, sftp_url, sftp_port, sftp_username, sftp_pem):
+    print 'Launching thread', thread_name
+    try:
+        os.makedirs(outdir)
+    except OSError:
+        if not os.path.isdir(outdir):
+            raise
+    sftp = connect(sftp_url, sftp_port, sftp_username, sftp_pem)
+    network_files_file = open(network_files_filename, 'r')
+    downloadsTxt = open(outdir + '/' + thread_name + '-downloads.txt', 'w')
+    downloadsTxt.write('network id\tsize (bytes)\ttime (seconds)\tthread' + os.linesep)
+    for network_file in network_files_file:
+        network_file = network_file.strip()
+        start = time.time()
+        get_graph(sftp, network_file)
+        end = time.time()
+        total_time = (end - start)
+        filesize = os.path.getsize(network_file)
+        downloadsTxt.write(network_file + '\t' +
+                           str(filesize) + '\t' +
+                           str(total_time) + '\t' +
+                           thread_name + os.linesep)
+    sftp.close()
+    downloadsTxt.close()
+    print 'Done with thread', thread_name
 
-def upload(thread_name, graph_size, times_to_upload=1):
-    print 'start', thread_name
-    sftp = connect('54.244.205.16', 22, 'ec2-user', 'aws_test_RH_7.pem')
+def upload_cx_dir(thread_name, cx_dir_name, outdir, sftp_url, sftp_port, sftp_username, sftp_pem):
+    print 'Launching thread', thread_name
+    try:
+        os.makedirs(outdir)
+    except OSError:
+        if not os.path.isdir(outdir):
+            raise
+    sftp = connect(sftp_url, sftp_port, sftp_username, sftp_pem)
+    cx_files = [f for f in os.listdir(cx_dir_name) if f.endswith('.cx')]
+    filenamesTxt = open(outdir + '/' + thread_name + '-filenams.txt', 'w')
+    uploadsTxt = open(outdir + '/' + thread_name + '-uploads.txt', 'w')
+    uploadsTxt.write('filename\tsize (bytes)\ttime (seconds)\tthread' + os.linesep)
+    for cx_filename in cx_files:
+        full_cx_filename = cx_dir_name + '/' + cx_filename
+        start = time.time()
+        put_graph(sftp, full_cx_filename)
+        end = time.time()
+        total_time = (end - start)
+        filenamesTxt.write(cx_filename + os.linesep)
+        filesize = os.path.getsize(full_cx_filename)
+        uploadsTxt.write(cx_filename + '\t' +
+                         str(filesize) + '\t' +
+                         str(total_time) + '\t' +
+                         thread_name + os.linesep)
+    sftp.close()
+    filenamesTxt.close()
+    uploadsTxt.close()
+    print 'Done with thread', thread_name
 
-    # graph_size = 3200
-    graph_sizes = []
-    times = []
-    for i in range(times_to_upload):
-        graph_sizes.append(graph_size)
-        filename = generate_graph(graph_size, prefix=thread_name + '-' + str(i+1))
+def concurrent_upload(num_threads, cx_dir_name, outdir, sftp_url, sftp_port):
+    start = time.time()
+    threads = []
 
-        # put_graph(sftp, filename)
-        def wrapped():
-            return put_graph(sftp, filename)
+    for i in range(num_threads):
+        t = threading.Thread(target=upload_cx_dir, args=(str(i+1), cx_dir_name, outdir, sftp_url, sftp_port))
+        threads.append(t)
 
-        import timeit
-        total_time = timeit.timeit(stmt=wrapped, number=1)
-        date_format = '%H:%M:%S %Z'
-        date = datetime.now()
-        my_timezone = timezone('US/Pacific')
-        date = my_timezone.localize(date)
-        date = date.astimezone(my_timezone)
-        print i, thread_name, filename
-        print 'graph_size:', graph_size, '|| time_elapsed:', total_time, 'seconds || clock:', date.strftime(date_format)
-        times.append(total_time)
-        # graph_size = ((graph_size * 2) / 10) * 10
+    for i in range(num_threads):
+        threads[i].start()
 
-def download(thread_name, graph_size, times_to_upload=1, filename=None):
-    print 'start download', thread_name
-    sftp = connect('54.244.205.16', 22, 'ec2-user', 'aws_test_RH_7.pem')
+    print 'Done launching upload threads.'
 
-    # graph_size = 3200
-    graph_sizes = []
-    times = []
-    for i in range(times_to_upload):
+    for i in range(num_threads):
+        threads[i].join()
 
-        # put_graph(sftp, filename)
-        def wrapped():
-            return get_graph(sftp, filename)
+    print 'Finished all uploads.'
+    end = time.time()
+    total_time = end - start
+    print 'time_elapsed:', total_time, 'seconds || clock:', ctime()
 
-        import timeit
-        total_time = timeit.timeit(stmt=wrapped, number=1)
-        date_format = '%H:%M:%S %Z'
-        date = datetime.now()
-        my_timezone = timezone('US/Pacific')
-        date = my_timezone.localize(date)
-        date = date.astimezone(my_timezone)
-        print i, thread_name, filename
-        print 'graph_size:', graph_size, '|| time_elapsed:', total_time, 'seconds || clock:', date.strftime(date_format)
-        times.append(total_time)
-        # graph_size = ((graph_size * 2) / 10) * 10
+def concurrent_download(num_threads, network_id_filename, outdir, sftp_url, sftp_port, sftp_username, sftp_pem):
+    start = time.time()
+    threads = []
+
+    for i in range(num_threads):
+        t = threading.Thread(target=download_files, args=(str(i + 1), network_id_filename, outdir, sftp_url, sftp_port, sftp_username, sftp_pem))
+        threads.append(t)
+
+    for i in range(num_threads):
+        threads[i].start()
+
+    print 'Done launching download threads.'
+
+    for i in range(num_threads):
+        threads[i].join()
+
+    print 'Finished all downloads.'
+    end = time.time()
+    total_time = end - start
+    print 'time_elapsed:', total_time, 'seconds || clock:', ctime()
 
 
 if __name__ == '__main__':
-    thread.start_new_thread(download, ('thread-1', 1600, 1, 'thread-1-1-1600.cx') )
-    thread.start_new_thread(download, ('thread-2', 1600, 1, 'thread-2-1-1600.cx') )
-    thread.start_new_thread(download, ('thread-3', 1600, 1, 'thread-3-1-1600.cx'))
-    thread.start_new_thread(download, ('thread-4', 1600, 1, 'thread-4-1-1600.cx'))
-    thread.start_new_thread(download, ('thread-5', 1600, 1, 'thread-5-1-1600.cx'))
-    thread.start_new_thread(download, ('thread-6', 1600, 1, 'thread-6-1-1600.cx'))
-    # thread.start_new_thread(upload, ('thread-7', 3200, 1))
-    # thread.start_new_thread(upload, ('thread-8', 3200, 1))
-    # upload('main-thread', 3200, 1)
-    print 'Done launching threads.'
+    VERSION = '1.0'
+    parser = argparse.ArgumentParser(description='Run tests on NDEx Server.')
+    parser.add_argument('--version', action='version', version=VERSION)
+    parser.add_argument('type', choices=['upload','download'], help='type of test')
+    parser.add_argument('num_threads', type=int, help='number of threads to run')
+    parser.add_argument('sftp_url', help='the url of the sftp server, e.g. 54.244.205.16 ')
+    parser.add_argument('-d','--dir', default='cx', help='the directory of cx files to act on')
+    parser.add_argument('-f','--file', default='1-uuid.txt', help='the file that contains network ids to be operated on')
+    parser.add_argument('-o','--outdir', default='.', help='the directory to save output files')
+    parser.add_argument('-p', '--port', type=int, default=22, help='the port of the sftp server')
+    parser.add_argument('-u', '--username', default='ec2-user', help='the username of the sftp server')
+    parser.add_argument('-c', '--credentials', default='aws_test_RH_7.pem', help='the name of the .pem file that stores the credentials')
 
-    while 1:
-        time.sleep(1000)
-        pass
-    # graph_size = ((graph_size * 2) / 10) * 10
+    args = parser.parse_args()
 
-    # sftp = connect('54.187.83.22', 22, 'ec2-user', 'aws_test_RH_7.pem')
+    if args.type == 'upload':
+        concurrent_upload(args.num_threads, args.dir, args.outdir, args.sftp_url, args.port, args.username, args.credentials)
 
-    # import pandas as pd
-    # df = pd.DataFrame (data=[graph_sizes,times])
-    # print df
-    # for file in sftp.listdir():
-    #     print file
+    elif args.type == 'download':
+        concurrent_download(args.num_threads, args.file, args.outdir, args.sftp_url, args.port, args.username, args.credentials)

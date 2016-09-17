@@ -1,14 +1,10 @@
-from ndex.networkn import NdexGraph
-import networkx as nx
-from datetime import datetime
-from pytz import timezone
-import pytz
-import thread
-import time
+import threading
 from requests_toolbelt import MultipartEncoder
 import requests
-
-mock_url = '54.244.205.25:8080'
+import os
+import argparse
+import time
+from time import ctime
 
 def post_multipart(url, fields):
 
@@ -30,7 +26,7 @@ def post_multipart(url, fields):
     return result
 
 
-def save_cx_stream_as_new_network(cx_stream):
+def save_cx_stream_as_new_network(mock_url, cx_stream):
     fields = {
         'CXNetworkStream': ('filename', cx_stream, 'application/octet-stream')
     }
@@ -39,7 +35,7 @@ def save_cx_stream_as_new_network(cx_stream):
     return post_multipart(url, fields)
 
 
-def get_stream(network_id):
+def get_stream(mock_url, network_id):
     url = 'http://'+mock_url+'/mock-cx-server/rest/network/' + network_id
     s = requests.session()
     response = s.get(url, params=None, stream=True)
@@ -49,121 +45,130 @@ def get_stream(network_id):
     return response
 
 
-def get_network_as_cx_stream(network_id):
-    '''Get the existing network with UUID network_id from the NDEx connection as a CX stream.
-
-    :param network_id: The UUID of the network.
-    :type network_id: str
-    :return: The response.
-    :rtype: `response object <http://docs.python-requests.org/en/master/user/quickstart/#response-content>`_
-
-    '''
-    return get_stream(network_id)
-
-def generate_graph(graph_size, prefix=''):
-    prefix = str(prefix)
-    G = NdexGraph(networkx_G=nx.complete_graph(graph_size))
-    G.set_name(prefix + '-' + str(graph_size))
-    return G
-    # filename = prefix + '-' + str(graph_size) + '.cx'
-    # G.write_to(filename)
-    # return filename
-
-def put_graph(sftp, filename):
-    sftp.put(filename, '/home/ec2-user/' + filename)
-
-def upload_mock_graph(G):
-    return save_cx_stream_as_new_network( G.to_cx_stream() )
+def get_network_as_cx_stream(mock_url, network_id):
+    return get_stream(mock_url, network_id)
 
 def download_mock_graph(network_id):
-    result = get_network_as_cx_stream(network_id)
-    # cx = result.json()
-    # G = NdexGraph(cx=cx)
-    # G.write_to(network_id + '.cx')
-    return result.json()
-
-# def wrapper_putter(sftp, filename):
-#     def wrapped():
-#         return put_graph(sftp, filename)
-#      return wrapped
-
-def upload(thread_name, graph_size, times_to_upload=1):
-    print 'start', thread_name
-    # sftp = connect('54.187.83.22', 22, 'ec2-user', 'aws_test_RH_7.pem')
+    response = get_network_as_cx_stream(network_id)
+    return response
 
 
+def mock_upload_from_file(mockurl, cxfilename):
+    cx_stream = open(cxfilename, 'rb')
+    response = save_cx_stream_as_new_network(mockurl, cx_stream)
+    cx_stream.close()
+    return response
 
-    # graph_size = 3200
-    graph_sizes = []
-    times = []
-    for i in range(times_to_upload):
-        graph_sizes.append(graph_size)
-        G = generate_graph(graph_size, prefix=thread_name + '-' + str(i+1))
-        filename = G.get_name()
+def download_network_ids(thread_name, network_id_filename, outdir, mock_url):
+    print 'Launching thread', thread_name
+    try:
+        os.makedirs(outdir)
+    except OSError:
+        if not os.path.isdir(outdir):
+            raise
+    network_id_file = open(network_id_filename, 'r')
+    downloadsTxt = open(outdir + '/' + thread_name + '-downloads.txt', 'w')
+    downloadsTxt.write('network id\tsize (bytes)\ttime (seconds)\tthread' + os.linesep)
+    for network_id in network_id_file:
+        network_id = network_id.strip()
+        start = time.time()
+        response = get_network_as_cx_stream(mock_url, network_id)
+        end = time.time()
+        total_time = (end - start)
+        filesize = len(response.content)
+        downloadsTxt.write(network_id + '\t' +
+                           str(filesize) + '\t' +
+                           str(total_time) + '\t' +
+                           thread_name + os.linesep)
+    downloadsTxt.close()
+    print 'Done with thread', thread_name
 
-        # put_graph(sftp, filename)
-        def wrapped():
-            return upload_mock_graph(G)
+def upload_cx_dir(thread_name, cx_dir_name, outdir, mock_url):
+    print 'Launching thread', thread_name
+    try:
+        os.makedirs(outdir)
+    except OSError:
+        if not os.path.isdir(outdir):
+            raise
+    cx_files = [f for f in os.listdir(cx_dir_name) if f.endswith('.cx')]
+    uuidTxt = open(outdir + '/' + thread_name + '-uuid.txt', 'w')
+    uploadsTxt = open(outdir + '/' + thread_name + '-uploads.txt', 'w')
+    uploadsTxt.write('filename\tsize (bytes)\ttime (seconds)\tthread\tuuid' + os.linesep)
+    for cx_filename in cx_files:
+        full_cx_filename = cx_dir_name + '/' + cx_filename
+        start = time.time()
+        uuid = mock_upload_from_file(mock_url, full_cx_filename)
+        end = time.time()
+        total_time = (end - start)
+        uuidTxt.write(uuid + os.linesep)
+        filesize = os.path.getsize(full_cx_filename)
+        uploadsTxt.write(cx_filename + '\t' +
+                         str(filesize) + '\t' +
+                         str(total_time) + '\t' +
+                         thread_name + '\t' +
+                         uuid + os.linesep)
+    uuidTxt.close()
+    uploadsTxt.close()
+    print 'Done with thread', thread_name
 
-        import timeit
-        total_time = timeit.timeit(stmt=wrapped, number=1)
-        date_format = '%H:%M:%S %Z'
-        date = datetime.now()
-        my_timezone = timezone('US/Pacific')
-        date = my_timezone.localize(date)
-        date = date.astimezone(my_timezone)
-        print i, thread_name, filename
-        print 'graph_size:', graph_size, '|| time_elapsed:', total_time, 'seconds || clock:', date.strftime(date_format)
-        times.append(total_time)
-        # graph_size = ((graph_size * 2) / 10) * 10
 
+def concurrent_upload(num_threads, cx_dir_name, outdir, mock_url):
+    start = time.time()
+    threads = []
 
-def download(thread_name, graph_size, times_to_upload=1, network_id=None):
-    print 'start download', thread_name
-    # sftp = connect('54.187.83.22', 22, 'ec2-user', 'aws_test_RH_7.pem')
+    for i in range(num_threads):
+        t = threading.Thread(target=upload_cx_dir, args=(str(i+1), cx_dir_name, outdir, mock_url))
+        threads.append(t)
 
-    # graph_size = 3200
-    graph_sizes = []
-    times = []
-    for i in range(times_to_upload):
+    for i in range(num_threads):
+        threads[i].start()
 
-        # put_graph(sftp, filename)
-        def wrapped():
-            return download_mock_graph(network_id)
+    print 'Done launching upload threads.'
 
-        import timeit
-        total_time = timeit.timeit(stmt=wrapped, number=1)
-        date_format = '%H:%M:%S %Z'
-        date = datetime.now()
-        my_timezone = timezone('US/Pacific')
-        date = my_timezone.localize(date)
-        date = date.astimezone(my_timezone)
-        print i, thread_name
-        print 'graph_size:', graph_size, '|| time_elapsed:', total_time, 'seconds || clock:', date.strftime(date_format)
-        times.append(total_time)
-        # graph_size = ((graph_size * 2) / 10) * 10
+    for i in range(num_threads):
+        threads[i].join()
+
+    print 'Finished all uploads.'
+    end = time.time()
+    total_time = end - start
+    print 'time_elapsed:', total_time, 'seconds || clock:', ctime()
+
+def concurrent_download(num_threads, network_id_filename, outdir):
+    start = time.time()
+    threads = []
+
+    for i in range(num_threads):
+        t = threading.Thread(target=download_network_ids, args=(str(i + 1), network_id_filename, outdir))
+        threads.append(t)
+
+    for i in range(num_threads):
+        threads[i].start()
+
+    print 'Done launching download threads.'
+
+    for i in range(num_threads):
+        threads[i].join()
+
+    print 'Finished all downloads.'
+    end = time.time()
+    total_time = end - start
+    print 'time_elapsed:', total_time, 'seconds || clock:', ctime()
 
 if __name__ == '__main__':
-    thread.start_new_thread(download, ('thread-1', 1600, 1, '37b31d90-3a3a-4802-b1ed-000fe76d3c0a'))
-    thread.start_new_thread(download, ('thread-2', 1600, 1, '37b31d90-3a3a-4802-b1ed-000fe76d3c0b'))
-    thread.start_new_thread(download, ('thread-3', 1600, 1, '37b31d90-3a3a-4802-b1ed-000fe76d3c0c'))
-    thread.start_new_thread(download, ('thread-4', 1600, 1, '37b31d90-3a3a-4802-b1ed-000fe76d3c0d'))
-    thread.start_new_thread(download, ('thread-5', 1600, 1, '37b31d90-3a3a-4802-b1ed-000fe76d3c0e'))
-    thread.start_new_thread(download, ('thread-6', 1600, 1, '37b31d90-3a3a-4802-b1ed-000fe76d3c0f'))
-    # thread.start_new_thread(upload, ('thread-7', 3200, 1))
-    # thread.start_new_thread(upload, ('thread-8', 3200, 1))
-    # upload('main-thread', 3200, 1)
-    print 'Done launching threads.'
+    VERSION = '1.0'
+    parser = argparse.ArgumentParser(description='Run tests on NDEx Server.')
+    parser.add_argument('--version', action='version', version=VERSION)
+    parser.add_argument('type', choices=['upload', 'download'], help='type of test')
+    parser.add_argument('num_threads', type=int, help='number of threads to run')
+    parser.add_argument('mock_url', help='the url of the mock server, e.g. 54.244.205.25:8080 ')
+    parser.add_argument('-d', '--dir', default='cx', help='the directory of cx files to act on')
+    parser.add_argument('-f', '--file', default='1-uuid.txt',
+                        help='the file that contains network ids to be operated on')
+    parser.add_argument('-o', '--outdir', default='.', help='the directory to save output files')
+    args = parser.parse_args()
 
-    while 1:
-        time.sleep(1000)
-        pass
-    # graph_size = ((graph_size * 2) / 10) * 10
+    if args.type == 'upload':
+        concurrent_upload(args.num_threads, args.dir, args.outdir, args.mock_url)
 
-    # sftp = connect('54.187.83.22', 22, 'ec2-user', 'aws_test_RH_7.pem')
-
-    # import pandas as pd
-    # df = pd.DataFrame (data=[graph_sizes,times])
-    # print df
-    # for file in sftp.listdir():
-    #     print file
+    elif args.type == 'download':
+        concurrent_download(args.num_threads, args.file, args.outdir)

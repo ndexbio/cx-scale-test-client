@@ -1,0 +1,1430 @@
+[
+    {
+        "numberVerification": [
+            {
+                "longNumber": 281474976710655
+            }
+        ]
+    }, 
+    {
+        "metaData": [
+            {
+                "idCounter": 0, 
+                "name": "nodes"
+            }, 
+            {
+                "idCounter": 0, 
+                "name": "edges"
+            }
+        ]
+    }, 
+    {
+        "networkAttributes": []
+    }, 
+    {
+        "subNetworks": [
+            {
+                "nodes": [
+                    1, 
+                    2, 
+                    3, 
+                    4, 
+                    5, 
+                    6, 
+                    7, 
+                    8, 
+                    9, 
+                    10, 
+                    11, 
+                    12, 
+                    13, 
+                    14, 
+                    15, 
+                    16, 
+                    17, 
+                    18, 
+                    19, 
+                    20, 
+                    21, 
+                    22, 
+                    23
+                ], 
+                "edges": [
+                    2, 
+                    1, 
+                    3, 
+                    5, 
+                    7, 
+                    4, 
+                    6, 
+                    9, 
+                    8, 
+                    10, 
+                    12, 
+                    11, 
+                    13, 
+                    16, 
+                    15, 
+                    18, 
+                    14, 
+                    17, 
+                    19, 
+                    20, 
+                    22, 
+                    21, 
+                    23, 
+                    25, 
+                    26, 
+                    24, 
+                    27, 
+                    29, 
+                    28, 
+                    30, 
+                    31, 
+                    32, 
+                    34, 
+                    33, 
+                    35, 
+                    37, 
+                    40, 
+                    39, 
+                    44, 
+                    42, 
+                    43, 
+                    36, 
+                    41, 
+                    38, 
+                    45, 
+                    46, 
+                    53, 
+                    50, 
+                    51, 
+                    47, 
+                    49, 
+                    52, 
+                    48, 
+                    54, 
+                    58, 
+                    59, 
+                    55, 
+                    57, 
+                    56
+                ], 
+                "@id": 0
+            }
+        ]
+    }, 
+    {
+        "cyViews": [
+            {
+                "s": 0, 
+                "@id": 0
+            }
+        ]
+    }, 
+    {
+        "nodes": [
+            {
+                "@id": 1, 
+                "n": "TGFB2"
+            }
+        ]
+    }, 
+    {
+        "nodes": [
+            {
+                "@id": 2, 
+                "n": "UGT2A2"
+            }
+        ]
+    }, 
+    {
+        "nodes": [
+            {
+                "@id": 3, 
+                "n": "UGT2A1"
+            }
+        ]
+    }, 
+    {
+        "nodes": [
+            {
+                "@id": 4, 
+                "n": "SLC5A4"
+            }
+        ]
+    }, 
+    {
+        "nodes": [
+            {
+                "@id": 5, 
+                "n": "TXNL4B"
+            }
+        ]
+    }, 
+    {
+        "nodes": [
+            {
+                "@id": 6, 
+                "n": "LIM2"
+            }
+        ]
+    }, 
+    {
+        "nodes": [
+            {
+                "@id": 7, 
+                "n": "NDST4"
+            }
+        ]
+    }, 
+    {
+        "nodes": [
+            {
+                "@id": 8, 
+                "n": "LOC101927826"
+            }
+        ]
+    }, 
+    {
+        "nodes": [
+            {
+                "@id": 9, 
+                "n": "SEMG1"
+            }
+        ]
+    }, 
+    {
+        "nodes": [
+            {
+                "@id": 10, 
+                "n": "NEURL1"
+            }
+        ]
+    }, 
+    {
+        "nodes": [
+            {
+                "@id": 11, 
+                "n": "FBXO41"
+            }
+        ]
+    }, 
+    {
+        "nodes": [
+            {
+                "@id": 12, 
+                "n": "TMEM246"
+            }
+        ]
+    }, 
+    {
+        "nodes": [
+            {
+                "@id": 13, 
+                "n": "SCN8A"
+            }
+        ]
+    }, 
+    {
+        "nodes": [
+            {
+                "@id": 14, 
+                "n": "CTSE"
+            }
+        ]
+    }, 
+    {
+        "nodes": [
+            {
+                "@id": 15, 
+                "n": "RSG1"
+            }
+        ]
+    }, 
+    {
+        "nodes": [
+            {
+                "@id": 16, 
+                "n": "CES2"
+            }
+        ]
+    }, 
+    {
+        "nodes": [
+            {
+                "@id": 17, 
+                "n": "FGF5"
+            }
+        ]
+    }, 
+    {
+        "nodes": [
+            {
+                "@id": 18, 
+                "n": "CATSPERG"
+            }
+        ]
+    }, 
+    {
+        "nodes": [
+            {
+                "@id": 19, 
+                "n": "BRINP2"
+            }
+        ]
+    }, 
+    {
+        "nodes": [
+            {
+                "@id": 20, 
+                "n": "TCL6"
+            }
+        ]
+    }, 
+    {
+        "nodes": [
+            {
+                "@id": 21, 
+                "n": "HLCS"
+            }
+        ]
+    }, 
+    {
+        "nodes": [
+            {
+                "@id": 22, 
+                "n": "POLR3B"
+            }
+        ]
+    }, 
+    {
+        "nodes": [
+            {
+                "@id": 23, 
+                "n": "PIP5K1A"
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 1, 
+                "@id": 2, 
+                "t": 17
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 1, 
+                "@id": 1, 
+                "t": 12
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 1, 
+                "@id": 3, 
+                "t": 14
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 2, 
+                "@id": 5, 
+                "t": 17
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 2, 
+                "@id": 7, 
+                "t": 3
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 2, 
+                "@id": 4, 
+                "t": 12
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 2, 
+                "@id": 6, 
+                "t": 14
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 3, 
+                "@id": 9, 
+                "t": 17
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 3, 
+                "@id": 8, 
+                "t": 12
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 3, 
+                "@id": 10, 
+                "t": 14
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 4, 
+                "@id": 12, 
+                "t": 17
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 4, 
+                "@id": 11, 
+                "t": 12
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 4, 
+                "@id": 13, 
+                "t": 14
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 5, 
+                "@id": 16, 
+                "t": 16
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 5, 
+                "@id": 15, 
+                "t": 17
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 5, 
+                "@id": 18, 
+                "t": 18
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 5, 
+                "@id": 14, 
+                "t": 12
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 5, 
+                "@id": 17, 
+                "t": 14
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 6, 
+                "@id": 19, 
+                "t": 12
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 6, 
+                "@id": 20, 
+                "t": 14
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 7, 
+                "@id": 22, 
+                "t": 17
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 7, 
+                "@id": 21, 
+                "t": 12
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 7, 
+                "@id": 23, 
+                "t": 14
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 8, 
+                "@id": 25, 
+                "t": 17
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 8, 
+                "@id": 26, 
+                "t": 11
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 8, 
+                "@id": 24, 
+                "t": 12
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 8, 
+                "@id": 27, 
+                "t": 14
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 9, 
+                "@id": 29, 
+                "t": 17
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 9, 
+                "@id": 28, 
+                "t": 12
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 9, 
+                "@id": 30, 
+                "t": 14
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 10, 
+                "@id": 31, 
+                "t": 17
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 10, 
+                "@id": 32, 
+                "t": 14
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 11, 
+                "@id": 34, 
+                "t": 17
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 11, 
+                "@id": 33, 
+                "t": 12
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 11, 
+                "@id": 35, 
+                "t": 14
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 12, 
+                "@id": 37, 
+                "t": 13
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 12, 
+                "@id": 40, 
+                "t": 14
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 12, 
+                "@id": 39, 
+                "t": 15
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 12, 
+                "@id": 44, 
+                "t": 17
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 12, 
+                "@id": 42, 
+                "t": 18
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 12, 
+                "@id": 43, 
+                "t": 19
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 12, 
+                "@id": 36, 
+                "t": 20
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 12, 
+                "@id": 41, 
+                "t": 21
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 12, 
+                "@id": 38, 
+                "t": 23
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 13, 
+                "@id": 45, 
+                "t": 17
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 13, 
+                "@id": 46, 
+                "t": 14
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 14, 
+                "@id": 53, 
+                "t": 17
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 14, 
+                "@id": 50, 
+                "t": 18
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 14, 
+                "@id": 51, 
+                "t": 19
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 14, 
+                "@id": 47, 
+                "t": 20
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 14, 
+                "@id": 49, 
+                "t": 21
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 14, 
+                "@id": 52, 
+                "t": 22
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 14, 
+                "@id": 48, 
+                "t": 23
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 15, 
+                "@id": 54, 
+                "t": 17
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 17, 
+                "@id": 58, 
+                "t": 18
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 17, 
+                "@id": 59, 
+                "t": 19
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 17, 
+                "@id": 55, 
+                "t": 20
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 17, 
+                "@id": 57, 
+                "t": 22
+            }
+        ]
+    }, 
+    {
+        "edges": [
+            {
+                "i": "interacts_with", 
+                "s": 17, 
+                "@id": 56, 
+                "t": 23
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 2, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 1, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 3, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 5, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 7, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 4, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 6, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 9, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 8, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 10, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 12, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 11, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 13, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 16, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 15, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 18, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 14, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 17, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 19, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 20, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 22, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 21, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 23, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 25, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 26, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 24, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 27, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 29, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 28, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 30, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 31, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 32, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 34, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 33, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 35, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 37, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 40, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 39, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 44, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 42, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 43, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 36, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 41, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 38, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 45, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 46, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 53, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 50, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 51, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 47, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 49, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 52, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 48, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 54, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 58, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 59, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 55, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 57, 
+                "n": "interaction"
+            }
+        ]
+    }, 
+    {
+        "edgeAttributes": [
+            {
+                "v": "interacts_with", 
+                "po": 56, 
+                "n": "interaction"
+            }
+        ]
+    }
+]
