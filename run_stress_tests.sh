@@ -1,0 +1,1 @@
+python server2.py upload 1 -o cxtest -d full_cx
